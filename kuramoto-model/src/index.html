@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/normalize.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'; this.onload=null;">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <title>Astromodel</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="loading-indicator" id="requestIndicator"></div>
+        <button @click="changeSettingsSidebarVisibility" class="settings-btn"><svg height="384pt"
+                viewBox="0 -53 384 384" width="384pt" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+                <path
+                    d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+                <path
+                    d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+            </svg></button>
+        <button @click="changeEnvironmentSettings" class="environment-settings-btn"></button>
+
+        <main id="anim-frame" class="anim-frame">
+        </main>
+        <aside class="settings">
+            <button @click="changeSettingsSidebarVisibility" class="settings__close-lip"></button>
+            <div class="settings__object-wrapper" ref="scrollingListWrapper">
+                <ul class="object-list settings__object-list" ref="scrollingList">
+                    <li v-for="object in objectList" class="object-list__item" ref="oscillatorObject">
+                        <div @click="randomizeObjectColor(object)" :style="{backgroundColor: object.color}" class="settings__color-indicator"></div>
+                        <span class="settings__object-name">{{ object.name }}</span>
+                        <button aria-label="change oscillator settings" @click="changeSettings(object)" class="settings__object-settings-btn"></button>
+                        <button aria-label="delete oscillator" @click="deleteObject(object)" class="settings__delete-object-btn"></button>
+                    </li>
+                </ul>
+                <button aria-label="add oscillator" @click="addObject" :class="{['settings__add-object-btn_first-in-list']: objectList.length == 0}" class="add-object-btn settings__add-object-btn">+</button>
+            </div>
+            <div class="settings__ui">
+                <button aria-label="start oscillators animation" @click="updateAnim" class="settings__update-btn"></button>
+                <label for="objectsImport" class="visually-hidden">Import file width oscillators</label>
+                <input id="objectsImport" type="file" accept=".json" class="settings__upload-btn">
+                <button aria-label="export json file with oscillators and their settings" @click="exportObjects" class="settings__export-btn"></button>
+                <button aria-label="get popup with the guide" @click="showGuide" class="settings__show-guide-btn"></button>
+            </div>
+        </aside>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./js/swal2.js"></script>
+    <script src="./js/p5.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/anim.js"></script>
+</body>
+
+</html>
